@@ -35,6 +35,8 @@ public class BolasActivity extends Activity implements OnTouchListener, SensorEv
     private Random rand = new Random();
     private Ball lastBall = null;
     private PointF previousPoint = new PointF();
+    private int targetBall = 0;
+    public static final int MAX_SPRITES = 20;
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +60,8 @@ public class BolasActivity extends Activity implements OnTouchListener, SensorEv
         
         // Setear bolas iniciales
         Ball ball1 = new Ball(100, 100, 5, 5, Color.RED, true);
-        Ball ball2 = new Ball(200, 200, 6, 4, Color.GREEN, true);
-        Ball ball3 = new Ball(300, 300, 4, 6, Color.BLUE, true);
+        Ball ball2 = new Ball(150, 150, 6, 4, Color.GREEN, true);
+        Ball ball3 = new Ball(200, 200, 4, 6, Color.BLUE, true);
         sprites.add(ball1);
         sprites.add(ball2);
         sprites.add(ball3);
@@ -80,10 +82,22 @@ public class BolasActivity extends Activity implements OnTouchListener, SensorEv
 
 		if (event.getAction() == MotionEvent.ACTION_DOWN)
 		{
-			lastBall = new Ball(event.getX(), event.getY(), 1, 1, Color.rgb(rand.nextInt(), rand.nextInt(), rand.nextInt()), false);
+			if (BolasActivity.sprites.size() < MAX_SPRITES)
+			{
+				lastBall = new Ball(event.getX(), event.getY(), 1, 1, Color.rgb(rand.nextInt(), rand.nextInt(), rand.nextInt()), false);
+				sprites.add(lastBall);
+			}
+			else
+			{
+				lastBall = (Ball)sprites.get(targetBall++);
+				lastBall.moving = false;
+				lastBall.position.x = event.getX();
+				lastBall.position.y = event.getY();
+				if (targetBall >= MAX_SPRITES)
+					targetBall = 0;
+			}
 			previousPoint.x = lastBall.position.x;
 			previousPoint.y = lastBall.position.y;
-			BolasActivity.sprites.add(lastBall);
 		}
 		else if (event.getAction() == MotionEvent.ACTION_MOVE)
 		{

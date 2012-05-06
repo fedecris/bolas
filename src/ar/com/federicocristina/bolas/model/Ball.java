@@ -10,7 +10,7 @@ public class Ball extends Sprite {
 	/* Proporcion de las bolas con respecto al tamaño del dispositivo */
 	public static final int PROPORTION = 15;
 	/* Multiplicador para el acelerometro */
-	public static final int SPEED_MPY = 2;
+	public static final int SPEED_MPY = 1;
 	/* Factor aleatorio para cada bola */
 	public final float SPEED_RND = 1 + (float) (Math.random() * 5);
 	/* Maximo corrimiento entre frame y frame */
@@ -55,8 +55,8 @@ public class Ball extends Sprite {
 			return;
 		
 		// Leer acelerometro y calcular el vector (limitando un valor maximo razonable)
-		vector.x = (vector.x / VECTOR_FLOW + -1 * BolasActivity.acel[0] * SPEED_MPY * SPEED_RND * VECTOR_FLOW) / 4;
-		vector.y = (vector.y / VECTOR_FLOW + BolasActivity.acel[1] * SPEED_MPY * SPEED_RND * VECTOR_FLOW) / 4;
+		vector.x = (vector.x / VECTOR_FLOW + BolasActivity.acel[1] * SPEED_MPY * SPEED_RND * VECTOR_FLOW) / 4;
+		vector.y = (vector.y / VECTOR_FLOW + BolasActivity.acel[0] * SPEED_MPY * SPEED_RND * VECTOR_FLOW) / 4;
 		if (vector.x > VECTOR_MAX) 
 			vector.x = VECTOR_MAX;
 		if (vector.y > VECTOR_MAX)
