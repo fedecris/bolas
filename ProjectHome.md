@@ -1,0 +1,1 @@
+Short example for rendering canvas in Android
